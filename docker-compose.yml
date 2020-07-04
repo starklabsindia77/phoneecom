@@ -5,7 +5,7 @@ services:
     ports:
       - 8000:8000
     build:
-      context: ./saleor
+      context: ./backend
       dockerfile: ./Dockerfile
       args:
         STATIC_URL: '/static/'
@@ -17,9 +17,9 @@ services:
       - redis
       - jaeger
     volumes:
-      - ./saleor/saleor/:/app/saleor:Z
-      - ./saleor/templates/:/app/templates:Z
-      - ./saleor/tests/:/app/tests
+      - ./backend/saleor/:/app/saleor:Z
+      - ./backend/templates/:/app/templates:Z
+      - ./backend/tests/:/app/tests
       # shared volume between worker and api for media
       - saleor-media:/app/media
     command: python manage.py runserver 0.0.0.0:8000
@@ -31,25 +31,25 @@ services:
 
   storefront:
     build:
-      context: ./saleor-storefront
+      context: ./storefront
       dockerfile: ./Dockerfile.dev
     ports:
       - 3000:3000
     restart: unless-stopped
     volumes:
-      - ./saleor-storefront/:/app:cached
+      - ./storefront/:/app:cached
       - /app/node_modules/
     command: npm start -- --host 0.0.0.0
 
   dashboard:
     build:
-      context: ./saleor-dashboard
+      context: ./dashboard
       dockerfile: ./Dockerfile.dev
     ports:
       - 9000:9000
     restart: unless-stopped
     volumes:
-      - ./saleor-dashboard/:/app:cached
+      - ./dashboard/:/app:cached
       - /app/node_modules/
     command: npm start -- --host 0.0.0.0
 
@@ -63,8 +63,8 @@ services:
     volumes:
       - saleor-db:/var/lib/postgresql
     environment:
-      - POSTGRES_USER=saleor
-      - POSTGRES_PASSWORD=saleor
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Noki@lumi@52
 
   redis:
     image: library/redis:5.0-alpine
@@ -78,7 +78,7 @@ services:
 
   worker:
     build:
-      context: ./saleor
+      context: ./backend
       dockerfile: ./Dockerfile
       args:
         STATIC_URL: '/static/'
@@ -90,8 +90,8 @@ services:
     depends_on:
       - redis
     volumes:
-      - ./saleor/saleor/:/app/saleor:Z,cached
-      - ./saleor/templates/:/app/templates:Z,cached
+      - ./backend/saleor/:/app/saleor:Z,cached
+      - ./backend/templates/:/app/templates:Z,cached
       # shared volume between worker and api for media
       - saleor-media:/app/media
 
