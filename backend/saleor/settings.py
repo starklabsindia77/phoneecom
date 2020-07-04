@@ -31,6 +31,7 @@ def get_bool_from_env(name, default_value):
 
 
 DEBUG = get_bool_from_env("DEBUG", True)
+DEBUG = True
 
 SITE_ID = 1
 
@@ -59,6 +60,8 @@ if not ALLOWED_CLIENT_HOSTS:
 ALLOWED_CLIENT_HOSTS = get_list(ALLOWED_CLIENT_HOSTS)
 
 INTERNAL_IPS = get_list(os.environ.get("INTERNAL_IPS", "127.0.0.1"))
+
+ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -501,9 +504,7 @@ GRAPHENE = {
     "RELAY_CONNECTION_ENFORCE_FIRST_OR_LAST": True,
     "RELAY_CONNECTION_MAX_LIMIT": 100,
     "MIDDLEWARE": [
-        "saleor.graphql.middleware.OpentracingGrapheneMiddleware",
-        "saleor.graphql.middleware.JWTMiddleware",
-        "saleor.graphql.middleware.app_middleware",
+         
     ],
 }
 
