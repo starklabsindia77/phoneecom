@@ -65,7 +65,7 @@ ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://postgres:Noki@lumi@52@localhost:5432/indiansaleor", conn_max_age=600
+        default="postgres://postgresnew:Noki@lumi@52@localhost:5432/indiansaleor", conn_max_age=600
     )
 }
 
@@ -559,3 +559,5 @@ REDIS_URL = os.environ.get("REDIS_URL")
 if REDIS_URL:
     CACHE_URL = os.environ.setdefault("CACHE_URL", REDIS_URL)
 CACHES = {"default": django_cache_url.config()}
+ALLOWED_HOSTS = ['34.69.53.50', 'localhost', '127.0.0.1']
+
