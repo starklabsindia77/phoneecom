@@ -65,7 +65,7 @@ ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://postgresnew:Noki@lumi@52@localhost:5432/indiansaleor", conn_max_age=600
+        default="postgres://saleor:saleor@localhost:5432/saleor", conn_max_age=600
     )
 }
 
@@ -199,8 +199,8 @@ TEMPLATES = [
 ]
 
 # Make this unique, and don't share it with anybody.
-#SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = 'Noki@lumi@52'
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
 
 if not SECRET_KEY and DEBUG:
     warnings.warn("SECRET_KEY not configured, using a random temporary key.")
